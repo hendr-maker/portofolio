@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Personal portfolio for Hendra Rukmana: a single-page highlight reel of projects in the sibling folders of `../` (`C:\Users\HendraRukmana\Documents\resource\*`). Next.js 16 App Router + React 19 + Tailwind v4 + shadcn/ui (`base-nova` style on Base UI, lucide icons), TypeScript strict, **static export** (`output: "export"` → `out/`). pnpm.
+Personal portfolio for Hendra Rukmana: a single-page highlight reel of projects in the sibling folders of `../`. Next.js 16 App Router + React 19 + Tailwind v4 + shadcn/ui (`base-nova` style on Base UI, lucide icons), TypeScript strict, **static export** (`output: "export"` → `out/`). pnpm.
 
 ## Commands
 

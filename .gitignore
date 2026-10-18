@@ -55,3 +55,9 @@ next-env.d.ts
 
 # confidential e2e blocklist (internal codenames, client names)
 /e2e/forbidden.local.txt
+
+# local editor / agent settings (may hold tokens or local paths)
+/.claude/settings.local.json
+/.mcp.json
+/.vscode/
+/.idea/
