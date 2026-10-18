@@ -103,15 +103,49 @@ export const skills: { title: T; items: string[] }[] = [
   },
 ];
 
+export const services = [
+  {
+    title: { en: "Backend & APIs", id: "Backend & API" },
+    body: {
+      en: "C# / .NET services, REST APIs and background jobs on PostgreSQL or SQL Server.",
+      id: "Service C# / .NET, REST API, dan background job di atas PostgreSQL atau SQL Server.",
+    },
+  },
+  {
+    title: { en: "Integrations", id: "Integrasi" },
+    body: {
+      en: "One shared integration layer for partners, payments and internal systems instead of one-off builds.",
+      id: "Satu integration layer bersama untuk partner, pembayaran, dan sistem internal, bukan build sekali pakai.",
+    },
+  },
+  {
+    title: { en: "Business apps, end to end", id: "Aplikasi bisnis, end to end" },
+    body: {
+      en: "Internal and operations apps from database schema to a React / Next.js UI.",
+      id: "Aplikasi internal dan operasional, dari skema database sampai UI React / Next.js.",
+    },
+  },
+];
+
+export const engagements = [
+  { en: "Full-time roles", id: "Posisi full-time" },
+  { en: "Project collaboration", id: "Kolaborasi proyek" },
+];
+
 export const ui = {
   projects: { en: "Selected work", id: "Proyek pilihan" },
   experience: { en: "Experience", id: "Pengalaman" },
   skills: { en: "Skills", id: "Keahlian" },
-  contact: { en: "Let's talk", id: "Mari ngobrol" },
+  contact: { en: "Let's work together", id: "Mari bekerja sama" },
   contactBody: {
-    en: "Open to backend and full-stack roles, remote or Jakarta-based.",
-    id: "Terbuka untuk posisi backend dan full-stack, remote atau di Jakarta.",
+    en: "Hiring for a backend or full-stack role, or need a hand on a project? Remote or Jakarta-based, here is where I can help from day one.",
+    id: "Sedang mencari engineer backend atau full-stack, atau butuh bantuan di sebuah proyek? Remote atau di Jakarta, ini area yang bisa langsung saya bantu sejak hari pertama.",
   },
+  helpTitle: { en: "How I can help", id: "Yang bisa saya bantu" },
+  reachTitle: { en: "Get in touch", id: "Hubungi saya" },
+  openTo: { en: "Open to", id: "Terbuka untuk" },
+  linkedinNote: { en: "Start a conversation about a role or collaboration", id: "Mulai obrolan soal posisi atau kolaborasi" },
+  githubNote: { en: "Code and personal projects", id: "Kode dan proyek pribadi" },
   switchLabel: { en: "Bahasa Indonesia", id: "English" },
   viewProject: { en: "View project", id: "Lihat proyek" },
   seeWork: { en: "See the work", id: "Lihat karya" },

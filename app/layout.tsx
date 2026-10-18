@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   title: seo.title.en,
   description: seo.description.en,
   authors: [{ name: profile.name, url: profile.linkedin }],
+  verification: { google: "3yOA0s0pgOrqY5iaVrJ4OZY74XaAQZ6UiZL-q5FjEyc" },
   alternates: { canonical: abs(pagePath("en")), languages: { en: abs(pagePath("en")), id: abs(pagePath("id")), "x-default": abs(pagePath("en")) } },
   openGraph: {
     type: "profile",

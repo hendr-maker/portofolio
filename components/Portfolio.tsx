@@ -1,10 +1,10 @@
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, LayoutDashboard, Server, Workflow } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Preview } from "@/components/views";
 import { SiteShell } from "@/components/SiteShell";
-import { abs, experience, href, pagePath, profile, skills, ui, ldJson, type Lang } from "@/lib/content";
+import { abs, engagements, experience, href, pagePath, profile, services, skills, ui, ldJson, type Lang } from "@/lib/content";
 import { groups, moreWork, type Project } from "@/lib/projects";
 import { cn } from "cn";
 import { skillIconId, skillIcons, spritePath } from "@/lib/skill-icons";
@@ -166,12 +166,54 @@ export default function Portfolio({ lang }: { lang: Lang }) {
           </div>
         </section>
 
-        <section id="contact" className="reveal scroll-mt-20 rounded-2xl border bg-accent/40 p-8 sm:p-12">
-          <h2 className="text-3xl font-bold tracking-tight">{ui.contact[lang]}</h2>
-          <p className="mt-3 max-w-xl text-muted-foreground">{ui.contactBody[lang]}</p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <a href={profile.linkedin} className={buttonVariants({ size: "lg" })}>LinkedIn</a>
-            <a href={profile.github} className={buttonVariants({ size: "lg", variant: "outline" })}>GitHub</a>
+        <section id="contact" className="reveal grid scroll-mt-20 overflow-hidden rounded-2xl border bg-accent/40 lg:grid-cols-5">
+          <div className="p-8 sm:p-12 lg:col-span-3">
+            <h2 className="text-3xl font-bold tracking-tight">{ui.contact[lang]}</h2>
+            <p className="mt-3 max-w-xl text-muted-foreground">{ui.contactBody[lang]}</p>
+            <h3 className="mt-8 text-sm font-semibold tracking-widest text-primary uppercase">{ui.helpTitle[lang]}</h3>
+            <ul className="mt-4 grid gap-5">
+              {services.map((s, n) => {
+                const Icon = [Server, Workflow, LayoutDashboard][n];
+                return (
+                  <li key={s.title.en} className="flex gap-4">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-xl border bg-background/70 text-primary"><Icon className="size-5" /></span>
+                    <div>
+                      <p className="font-medium">{s.title[lang]}</p>
+                      <p className="text-sm text-muted-foreground">{s.body[lang]}</p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div className="flex flex-col gap-4 border-t bg-card/60 p-8 sm:p-12 lg:col-span-2 lg:border-t-0 lg:border-l">
+            <h3 className="text-sm font-semibold tracking-widest text-primary uppercase">{ui.reachTitle[lang]}</h3>
+            <p className="flex items-center gap-2 text-sm text-muted-foreground">
+              <span className="pulse-dot size-1.5 rounded-full bg-success" /> {profile.location[lang]}
+            </p>
+            <div className="flex flex-wrap items-center gap-2 text-sm">
+              <span className="text-muted-foreground">{ui.openTo[lang]}</span>
+              {engagements.map((e) => <Badge key={e.en} variant="secondary">{e[lang]}</Badge>)}
+            </div>
+            {[
+              { name: "LinkedIn", url: profile.linkedin, note: ui.linkedinNote[lang], primary: true },
+              { name: "GitHub", url: profile.github, note: ui.githubNote[lang], primary: false },
+            ].map((c) => (
+              <a
+                key={c.name}
+                href={c.url}
+                className={cn(
+                  "group/channel flex items-center justify-between gap-4 rounded-xl border p-4 transition-colors",
+                  c.primary ? "border-primary bg-primary text-primary-foreground hover:bg-primary/90" : "bg-background/70 hover:border-primary/50",
+                )}
+              >
+                <span>
+                  <span className="block font-semibold">{c.name}</span>
+                  <span className={cn("block text-sm", c.primary ? "text-primary-foreground/80" : "text-muted-foreground")}>{c.note}</span>
+                </span>
+                <ArrowUpRight className="size-5 shrink-0 transition-transform group-hover/channel:translate-x-0.5 group-hover/channel:-translate-y-0.5" />
+              </a>
+            ))}
           </div>
         </section>
       </main>
