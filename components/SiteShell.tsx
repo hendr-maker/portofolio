@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "cn";
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { href, pagePath, profile, ui, type Lang } from "@/content";
+import { href, pagePath, profile, ui, type Lang } from "@/lib/content";
 
 export function SiteShell({ lang, alternate, children }: { lang: Lang; alternate: string; children: ReactNode }) {
   const home = href(pagePath(lang));

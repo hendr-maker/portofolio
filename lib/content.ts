@@ -4,7 +4,7 @@ type T = Record<Lang, string>;
 export const profile = {
   name: "Hendra Rukmana",
   role: { en: "Backend Engineer · Full-Stack", id: "Backend Engineer · Full-Stack" },
-  location: { en: "West Java, Indonesia · open to remote", id: "Jawa Barat, Indonesia · terbuka untuk remote" },
+  location: { en: "Jakarta, Indonesia · open to remote or hybrid", id: "Jakarta, Indonesia · terbuka untuk remote atau hybrid" },
   summary: {
     en: "10+ years on C# and .NET. I turn ad-hoc, per-project builds into one shared architecture and integration layer, then build the business apps on top of it, backend to frontend.",
     id: "10+ tahun di C# dan .NET. Saya mengubah build per proyek yang ad-hoc menjadi satu arsitektur dan layer integrasi bersama, lalu membangun aplikasi bisnis di atasnya, dari backend sampai frontend.",
@@ -17,7 +17,7 @@ export const profile = {
 export const seo = {
   title: { en: "Hendra Rukmana · .NET Backend & Full-Stack Engineer", id: "Hendra Rukmana · Backend .NET & Full-Stack Engineer" },
   description: {
-    en: "Backend engineer with 10+ years in C# and .NET: integration gateways, e-commerce, warehouse and KOL platforms. See each project with an app preview.",
+    en: "Backend engineer with 10+ years in C# and .NET: integration gateways, e-commerce, warehouse and KOL platforms. See each project with its own app preview.",
     id: "Backend engineer 10+ tahun di C# dan .NET: integration gateway, e-commerce, warehouse, dan platform KOL. Lihat tiap proyek lengkap dengan preview aplikasinya.",
   },
 };
@@ -35,7 +35,7 @@ export const pagePath = (lang: Lang, slug?: string) => `${lang === "id" ? "/id" 
 export const experience: { role: string; company: string; period: string; note: T }[] = [
   {
     role: "Backend Developer (Technical Lead scope)",
-    company: "Opto Lingkar Sejahtera (Scarlett Indonesia)",
+    company: "Scarlett Indonesia",
     period: "2023 – Present",
     note: {
       en: "Shared architecture, integration gateway, e-commerce, warehouse and KOL platforms.",

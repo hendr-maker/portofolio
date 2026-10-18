@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
-import { abs, pagePath } from "@/content";
-import { allProjects } from "@/projects";
+import { abs, pagePath } from "@/lib/content";
+import { allProjects } from "@/lib/projects";
 
 export const dynamic = "force-static";
 

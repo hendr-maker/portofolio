@@ -1,7 +1,7 @@
 "use client";
 
 import { buttonVariants } from "@/components/ui/button";
-import { href, pagePath } from "@/content";
+import { href, pagePath } from "@/lib/content";
 
 // Deliberately never renders error.message or the stack: visitors see a generic message only.
 export default function ErrorPage({ reset }: { error: Error & { digest?: string }; reset: () => void }) {

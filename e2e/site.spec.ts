@@ -1,8 +1,8 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { expect, test, type Page } from "@playwright/test";
-import { pagePath } from "../content";
-import { allProjects, groups } from "../projects";
+import { pagePath } from "../lib/content";
+import { allProjects, groups } from "../lib/projects";
 
 const blocklistPath = join(__dirname, "forbidden.local.txt");
 const pages = [pagePath("en"), pagePath("id"), ...allProjects.flatMap((p) => [pagePath("en", p.slug), pagePath("id", p.slug)])];

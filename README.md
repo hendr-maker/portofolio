@@ -7,4 +7,4 @@ pnpm install && pnpm dev    # http://localhost:3000
 pnpm build                  # static site in out/
 ```
 
-Content lives in `content.ts`. See `CLAUDE.md` for architecture and constraints.
+Content lives in `lib/content.ts` and `lib/projects.ts`. See `CLAUDE.md` for architecture and constraints.

@@ -8,8 +8,8 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ApiExplorer, AppScreen, Console, FlowDiagram } from "@/components/views";
 import { SiteShell } from "@/components/SiteShell";
-import { abs, href, ogImage, pagePath, profile, ui, ldJson, type Lang } from "@/content";
-import { allProjects, type Project } from "@/projects";
+import { abs, href, ogImage, pagePath, profile, ui, ldJson, type Lang } from "@/lib/content";
+import { allProjects, type Project } from "@/lib/projects";
 
 const find = (slug: string) => allProjects.findIndex((x) => x.slug === slug);
 

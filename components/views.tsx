@@ -1,8 +1,9 @@
 import type { ReactNode } from "react";
-import { ArrowDown, ArrowRight, ChevronDown, Lock, Search } from "lucide-react";
+import { ChevronDown, Lock, Search } from "lucide-react";
+import { renderMermaidSVG } from "beautiful-mermaid";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "cn";
-import type { ApiView, AppView, Block, CliView, FlowView, Method, Project, Screen } from "@/projects";
+import type { ApiView, AppView, Block, CliView, FlowView, Method, Project, Screen } from "@/lib/projects";
 
 // Renders the illustrative views defined in projects.ts. Data there is invented.
 // Plain server markup on purpose: no client components, so nothing is hydrated or serialized twice.
@@ -250,29 +251,29 @@ function Code({ label, code }: { label: string; code: string }) {
   );
 }
 
+// Mermaid flowchart rendered to SVG at build time, so no diagram library reaches the browser. Colors are page
+// tokens (dark mode follows). The renderer's <style> is global once inlined, so its selectors are scoped to the
+// diagram, and its Google Fonts @import is dropped (CSP, no third-party requests) in favor of the page font.
+function mermaidFlow(flow: FlowView, direction: "LR" | "TD") {
+  const label = (s: FlowView["steps"][number]) => [s.label, s.note].filter(Boolean).join("<br/>").replaceAll('"', "#quot;");
+  const code = [
+    `flowchart ${direction}`,
+    ...flow.steps.map((s, i) => `  s${i}["${label(s)}"]`),
+    `  ${flow.steps.map((_, i) => `s${i}`).join(" --> ")}`,
+  ].join("\n");
+  return renderMermaidSVG(code, { bg: "var(--card)", fg: "var(--foreground)", accent: "var(--primary)", muted: "var(--muted-foreground)", transparent: true, padding: 8 })
+    .replace(/@import url\([^)]*\);/, "")
+    .replace(/text \{ font-family:[^}]*\}/, ".flow-svg text { font-family: var(--font-geist-sans), system-ui, sans-serif; }")
+    .replace(/\n {2}svg \{/, "\n  svg.flow-svg {")
+    .replace("<svg ", '<svg class="flow-svg" ');
+}
+
 export function FlowDiagram({ flow }: { flow: FlowView }) {
   return (
     <div className="rounded-xl border bg-card p-4 text-xs shadow-sm sm:p-6">
       <p className="mb-4 text-sm font-semibold">{flow.title}</p>
-      <ol className="flex flex-col items-stretch gap-1 lg:flex-row lg:flex-wrap lg:items-center">
-        {flow.steps.map((s, i) => (
-          <li key={s.label} className="flex flex-col items-center gap-1 lg:flex-row">
-            <div className="w-full rounded-lg border bg-background px-3 py-2 text-center lg:w-auto lg:min-w-28" style={{ animationDelay: `${i * 80}ms` }}>
-              <p className="font-semibold">
-                <span className="mr-1.5 inline-flex size-4 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">{i + 1}</span>
-                {s.label}
-              </p>
-              {s.note && <p className="mt-0.5 text-[11px] text-muted-foreground">{s.note}</p>}
-            </div>
-            {i < flow.steps.length - 1 && (
-              <>
-                <ArrowDown className="size-4 text-primary lg:hidden" />
-                <ArrowRight className="hidden size-4 text-primary lg:block" />
-              </>
-            )}
-          </li>
-        ))}
-      </ol>
+      <div className="hidden lg:block [&_svg]:h-auto [&_svg]:max-w-full" dangerouslySetInnerHTML={{ __html: mermaidFlow(flow, "LR") }} />
+      <div className="mx-auto max-w-xs lg:hidden [&_svg]:h-auto [&_svg]:max-w-full" dangerouslySetInnerHTML={{ __html: mermaidFlow(flow, "TD") }} />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import type { Lang } from "@/content";
+import type { Lang } from "@/lib/content";
 
 type T = Record<Lang, string>;
 const t = (en: string, id: string): T => ({ en, id });
@@ -38,14 +38,14 @@ export type Project = {
   view: View;
 };
 
-export type Group = { id: "opto" | "earlier" | "personal"; title: T; intro: T; internal: boolean; projects: Project[] };
+export type Group = { id: "current" | "earlier" | "personal"; title: T; intro: T; internal: boolean; projects: Project[] };
 
 const json = (v: unknown) => JSON.stringify(v, null, 2);
 
 export const groups: Group[] = [
   {
-    id: "opto",
-    title: t("Case studies · Opto (Scarlett Indonesia)", "Studi kasus · Opto (Scarlett Indonesia)"),
+    id: "current",
+    title: t("Case studies · Scarlett Indonesia", "Studi kasus · Scarlett Indonesia"),
     intro: t(
       "Platforms I designed and maintained as backend developer with technical-lead scope, 2023 to now.",
       "Platform yang saya rancang dan kelola sebagai backend developer dengan scope technical lead, 2023 sampai sekarang.",
@@ -54,7 +54,7 @@ export const groups: Group[] = [
     projects: [
       {
         slug: "e-commerce-oms",
-        title: t("E-Commerce & Order Management", "E-Commerce & Order Management"),
+        title: t("E-Commerce & Order Management", "E-Commerce & Manajemen Pesanan"),
         summary: t(
           "End-to-end online sales platform: orders, promotions, resellers and shipping, wired to warehouse fulfilment.",
           "Platform penjualan online end-to-end: order, promo, reseller, dan pengiriman, terhubung ke fulfilment gudang.",
@@ -114,7 +114,7 @@ export const groups: Group[] = [
       },
       {
         slug: "warehouse-management",
-        title: t("Warehouse Management System", "Warehouse Management System"),
+        title: t("Warehouse Management System", "Sistem Manajemen Gudang"),
         summary: t(
           "Stock control from purchase to delivery with marketplace sync, and the most heavily tested service in the stack.",
           "Kontrol stok dari pembelian sampai pengiriman dengan sinkronisasi marketplace, dan service dengan testing paling matang di stack.",
@@ -174,7 +174,7 @@ export const groups: Group[] = [
       },
       {
         slug: "kol-management",
-        title: t("KOL Management & Payment", "KOL Management & Payment"),
+        title: t("KOL Management & Payment", "Manajemen & Pembayaran KOL"),
         summary: t(
           "Creator campaigns end to end, from statement of work and KPI to tax and payout, with automated bank reconciliation.",
           "Kampanye kreator end to end, dari statement of work dan KPI sampai pajak dan payout, dengan rekonsiliasi bank otomatis.",
@@ -232,7 +232,7 @@ export const groups: Group[] = [
       },
       {
         slug: "integration-gateway",
-        title: t("Unified Integration Gateway", "Unified Integration Gateway"),
+        title: t("Unified Integration Gateway", "Gateway Integrasi Terpadu"),
         summary: t(
           "One signed gateway between every internal app and external vendors: marketplaces, couriers, payments, HRIS and ERP.",
           "Satu gateway bertanda tangan antara semua aplikasi internal dan vendor eksternal: marketplace, kurir, pembayaran, HRIS, dan ERP.",
@@ -320,7 +320,7 @@ export const groups: Group[] = [
       },
       {
         slug: "budgeting-monitoring",
-        title: t("Budgeting & Trade Monitoring", "Budgeting & Trade Monitoring"),
+        title: t("Budgeting & Trade Monitoring", "Monitoring Anggaran & Trade"),
         summary: t(
           "Budget planning, execution and reporting with trade-activity monitoring, fed by the ERP.",
           "Perencanaan, eksekusi, dan pelaporan budget dengan monitoring aktivitas trade, datanya dari ERP.",
@@ -366,7 +366,7 @@ export const groups: Group[] = [
       },
       {
         slug: "ticketing-workflow",
-        title: t("Ticketing & Document Workflow", "Ticketing & Document Workflow"),
+        title: t("Ticketing & Document Workflow", "Ticketing & Alur Dokumen"),
         summary: t(
           "Internal helpdesk with document sign-off, approvals and a changelog, updating live without an ORM.",
           "Helpdesk internal dengan sign-off dokumen, approval, dan changelog, ter-update live tanpa ORM.",
@@ -416,7 +416,7 @@ export const groups: Group[] = [
       },
       {
         slug: "partner-integration-api",
-        title: t("Partner Integration API", "Partner Integration API"),
+        title: t("Partner Integration API", "API Integrasi Partner"),
         summary: t(
           "Public API for partners and clients with signed, time-boxed requests.",
           "API publik untuk partner dan klien dengan request bertanda tangan dan berbatas waktu.",
@@ -888,7 +888,7 @@ export const groups: Group[] = [
       },
       {
         slug: "ai-video-suite",
-        title: t("AI Video Generation Suite", "AI Video Generation Suite"),
+        title: t("AI Video Generation Suite", "Suite Pembuatan Video AI"),
         summary: t("Theme to script to image to video to voice, for short-form content.", "Tema ke naskah ke gambar ke video ke suara, untuk konten pendek."),
         context: t("Producing short-form videos by hand took hours per clip.", "Membuat video pendek secara manual butuh berjam-jam per klip."),
         role: t("Solo project.", "Proyek solo."),

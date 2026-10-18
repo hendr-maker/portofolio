@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Portfolio from "@/components/Portfolio";
-import { abs, ogImage, pagePath, profile, seo } from "@/content";
+import { abs, ogImage, pagePath, profile, seo } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: seo.title.id,

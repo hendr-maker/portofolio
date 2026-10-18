@@ -6,6 +6,7 @@
 @custom-variant dark (@media (prefers-color-scheme: dark));
 
 :root {
+  color-scheme: light dark;
   --background: oklch(0.985 0.002 247);
   --foreground: oklch(0.21 0.03 265);
   --card: oklch(1 0 0);
@@ -127,6 +128,18 @@
   @keyframes reveal {
     from { opacity: 0; transform: translateY(24px); }
   }
+}
+
+/* Skills bento: corner glow that strengthens on hover. */
+.skill-tile {
+  background:
+    radial-gradient(110% 80% at 100% 0%, color-mix(in oklch, var(--primary) 10%, transparent), transparent 60%),
+    var(--card);
+  transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+.skill-tile:hover {
+  border-color: color-mix(in oklch, var(--primary) 45%, var(--border));
+  box-shadow: 0 24px 48px -28px color-mix(in oklch, var(--primary) 55%, transparent);
 }
 
 /* Live dots / bars inside mockups. */

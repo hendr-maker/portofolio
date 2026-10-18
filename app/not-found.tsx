@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { buttonVariants } from "@/components/ui/button";
 import { SiteShell } from "@/components/SiteShell";
-import { href, pagePath } from "@/content";
+import { href, pagePath } from "@/lib/content";
 
 // Overrides the root canonical/OG, which would otherwise point this noindex page at the home page.
 export const metadata: Metadata = {
