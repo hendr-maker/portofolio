@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "cn";
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { GitHubLogo, LinkedInLogo } from "@/components/social";
 import { href, pagePath, profile, ui, type Lang } from "@/lib/content";
 
 export function SiteShell({ lang, alternate, children }: { lang: Lang; alternate: string; children: ReactNode }) {
@@ -25,9 +26,9 @@ export function SiteShell({ lang, alternate, children }: { lang: Lang; alternate
         <Separator className="mb-6" />
         <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
           <span>© {profile.name}</span>
-          <span className="flex gap-4">
-            <a href={profile.linkedin} className="hover:text-foreground">LinkedIn</a>
-            <a href={profile.github} className="hover:text-foreground">GitHub</a>
+          <span className="flex items-center gap-4">
+            <a href={profile.linkedin} title="LinkedIn" className="transition-opacity hover:opacity-80"><LinkedInLogo /><span className="sr-only">LinkedIn</span></a>
+            <a href={profile.github} title="GitHub" className="text-foreground transition-opacity hover:opacity-80"><GitHubLogo /><span className="sr-only">GitHub</span></a>
           </span>
         </div>
       </footer>
