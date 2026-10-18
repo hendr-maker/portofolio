@@ -52,7 +52,7 @@ export const experience: { role: string; company: string; period: string; note: 
     },
   },
   {
-    role: ".NET Developer (contract)",
+    role: ".NET Developer",
     company: "Home Credit Indonesia",
     period: "2020",
     note: {
@@ -133,7 +133,7 @@ export const engagements = [
 ];
 
 export const ui = {
-  projects: { en: "Selected work", id: "Proyek pilihan" },
+  projects: { en: "Selected works", id: "Proyek pilihan" },
   experience: { en: "Experience", id: "Pengalaman" },
   skills: { en: "Skills", id: "Keahlian" },
   contact: { en: "Let's work together", id: "Mari bekerja sama" },
