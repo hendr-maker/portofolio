@@ -106,7 +106,7 @@ export default function ProjectDetail({ lang, slug }: { lang: Lang; slug: string
           <ArrowLeft data-icon="inline-start" /> {ui.back[lang]}
         </a>
 
-        <header className="mt-6 animate-in slide-in-from-bottom-4 duration-500">
+        <header className="mt-6 rise">
           <p className="text-sm font-semibold tracking-widest text-primary uppercase">{p.group.title[lang]}</p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight text-balance sm:text-5xl">{p.title[lang]}</h1>
           {p.client && <p className="mt-2 text-muted-foreground">{ui.client[lang]}: {p.client[lang]}</p>}

@@ -99,19 +99,10 @@
   }
 }
 
-/* Hero: drifting dot grid + slow glow, masked to fade out at the edges. */
-.hero-grid {
-  background-image: radial-gradient(color-mix(in oklch, var(--foreground) 18%, transparent) 1px, transparent 1px);
-  background-size: 28px 28px;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 75%);
-  animation: grid-drift 24s linear infinite;
-}
+/* Hero: slow glow over the editor backdrop. */
 .hero-glow {
   background: radial-gradient(closest-side, color-mix(in oklch, var(--primary) 35%, transparent), transparent);
   animation: glow-float 14s ease-in-out infinite alternate;
-}
-@keyframes grid-drift {
-  to { background-position: 28px 28px; }
 }
 @keyframes glow-float {
   0% { transform: translate(-10%, -5%) scale(1); }
@@ -119,6 +110,101 @@
 }
 
 /* Scroll reveal, only where scroll-driven animations exist. */
+/* Hero entrance: transform/opacity only, so it runs on the compositor (no filter, unlike tw-animate's enter keyframe). */
+/* In the components layer (below) so utilities like [animation-delay:300ms] still win over the shorthand. */
+@keyframes rise { from { transform: translateY(1rem); } }
+@keyframes rise-fade { from { opacity: 0; transform: translateY(1rem); } }
+
+/* Skip layout/paint of off-screen card previews (the mockups are most of the DOM). Used on flex-sized boxes only, so
+   the placeholder size never drives layout. */
+.cv { content-visibility: auto; }
+
+/* Project carousels: paged like a phone home screen. Native scroll snap (touch and trackpad swipe, with the platform's
+   own edge bounce); prev/next buttons and dots are CSS ::scroll-button / ::scroll-marker where supported. Elsewhere
+   the inline script in Portfolio.tsx reveals real buttons. 9:16 tiles: two per phone screen with a third peeking,
+   then 3 / 5 per page. */
+@layer components {
+  .rise, .rise-fade { animation: rise 0.7s cubic-bezier(.2,.8,.2,1) both; }
+  .rise-fade { animation-name: rise-fade; }
+
+  .carousel {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    /* Room for card shadows, focus rings and the hover fan, which overflow would otherwise clip. */
+    margin: -1.5rem -0.5rem -0.75rem;
+    padding: 1.5rem 0.5rem 0.75rem;
+    scroll-padding-inline: 0.5rem;
+  }
+  .carousel > li {
+    flex: 0 0 44%;
+    scroll-snap-align: start;
+  }
+  @media (width >= 40rem) { .carousel > li { flex-basis: calc((100% - 2rem) / 3); } }
+  @media (width >= 64rem) { .carousel > li { flex-basis: calc((100% - 4rem) / 5); } }
+  /* Hover/focus fan, like a hand of cards: the card rises, its neighbours rise less and tilt away. */
+  @media (hover: hover) {
+    .carousel > li {
+      transform-origin: 50% 100%;
+      transition: translate 0.35s cubic-bezier(.2,.8,.2,1), rotate 0.35s cubic-bezier(.2,.8,.2,1);
+    }
+    .carousel > li:is(:hover, :focus-within) { translate: 0 -1rem; }
+    .carousel > li:is(:hover, :focus-within) + li { translate: 0 -0.5rem; rotate: 2deg; }
+    .carousel > li:has(+ li:is(:hover, :focus-within)) { translate: 0 -0.5rem; rotate: -2deg; }
+    .carousel > li:is(:hover, :focus-within) + li + li,
+    .carousel > li:has(+ li + li:is(:hover, :focus-within)) { translate: 0 -0.2rem; }
+  }
+  @supports selector(::scroll-marker) {
+    .carousel {
+      scrollbar-width: none;
+      scroll-marker-group: after;
+    }
+    .carousel::scroll-button(*) {
+      position: absolute;
+      bottom: 0;
+      display: grid;
+      place-items: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg, 0.625rem);
+      background: var(--background);
+      color: var(--foreground);
+      cursor: pointer;
+      transition: background-color 0.2s, opacity 0.2s;
+    }
+    .carousel::scroll-button(*):hover { background: var(--muted); }
+    .carousel::scroll-button(*):focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+    .carousel::scroll-button(*):disabled { opacity: 0.35; cursor: default; }
+    .carousel::scroll-button(left) { content: "←" / "Previous"; left: 0; }
+    .carousel::scroll-button(right) { content: "→" / "Next"; right: 0; }
+    .carousel::scroll-marker-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      height: 2.25rem;
+      margin: 1.25rem 3rem 0;
+    }
+    .carousel > li::scroll-marker {
+      content: "";
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 9999px;
+      background: color-mix(in oklch, var(--foreground) 25%, transparent);
+      transition: width 0.3s, background-color 0.3s;
+    }
+    .carousel > li::scroll-marker:target-current {
+      width: 1.5rem;
+      background: var(--primary);
+    }
+  }
+}
+
 @supports (animation-timeline: view()) {
   .reveal {
     animation: reveal linear both;
@@ -126,7 +212,8 @@
     animation-range: entry 0% entry 35%;
   }
   @keyframes reveal {
-    from { opacity: 0; transform: translateY(24px); }
+    /* Transform only: a faded-in element mid-animation fails contrast audits. */
+    from { transform: translateY(24px); }
   }
 }
 
