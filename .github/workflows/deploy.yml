@@ -16,34 +16,40 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: pnpm
       - id: pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec next typegen && pnpm exec tsc --noEmit
       - run: pnpm lint
+      # The confidentiality blocklist is gitignored; CI gets it from the FORBIDDEN_TERMS secret (one regex per line).
+      - run: printf '%s\n' "$FORBIDDEN_TERMS" > e2e/forbidden.local.txt
+        env:
+          FORBIDDEN_TERMS: ${{ secrets.FORBIDDEN_TERMS }}
+      # e2e builds and serves out/ at the root; the deploy build below is rebuilt with the Pages base path.
+      - run: pnpm e2e
       # base_path is "" for a <user>.github.io repo and "/<repo>" for a project site.
       - run: pnpm build
         env:
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
           NEXT_PUBLIC_SITE_URL: ${{ steps.pages.outputs.base_url }}
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: out
 
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

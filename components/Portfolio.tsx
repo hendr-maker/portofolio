@@ -4,7 +4,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Preview } from "@/components/views";
 import { SiteShell } from "@/components/SiteShell";
-import { experience, href, pagePath, profile, siteUrl, skills, ui, ldJson, type Lang } from "@/content";
+import { abs, experience, href, pagePath, profile, skills, ui, ldJson, type Lang } from "@/content";
 import { groups, moreWork, type Project } from "@/projects";
 import { cn } from "cn";
 
@@ -19,7 +19,7 @@ function ProjectCard({ p, lang, featured }: { p: Project; lang: Lang; featured: 
       <CardHeader>
         {p.client && <p className="text-xs font-medium text-muted-foreground">{p.client[lang]}</p>}
         <CardTitle className="text-lg">
-          <a href={href(pagePath(lang, p.slug))} className="outline-none after:absolute after:inset-0">{p.title[lang]}</a>
+          <h4><a href={href(pagePath(lang, p.slug))} className="outline-none after:absolute after:inset-0">{p.title[lang]}</a></h4>
         </CardTitle>
         <CardDescription>{p.summary[lang]}</CardDescription>
       </CardHeader>
@@ -42,12 +42,23 @@ function ProjectCard({ p, lang, featured }: { p: Project; lang: Lang; featured: 
 export default function Portfolio({ lang }: { lang: Lang }) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    name: profile.name,
-    jobTitle: profile.role.en,
-    url: `${siteUrl}/`,
-    sameAs: [profile.linkedin, profile.github],
-    knowsAbout: skills.flatMap((s) => s.items),
+    "@graph": [
+      {
+        "@type": "Person",
+        name: profile.name,
+        jobTitle: profile.role[lang],
+        description: profile.summary[lang],
+        url: abs(pagePath("en")),
+        sameAs: [profile.linkedin, profile.github],
+        knowsAbout: skills.flatMap((s) => s.items),
+      },
+      {
+        "@type": "WebSite",
+        name: profile.name,
+        url: abs(pagePath(lang)),
+        inLanguage: lang,
+      },
+    ],
   };
 
   return (
@@ -125,7 +136,7 @@ export default function Portfolio({ lang }: { lang: Lang }) {
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {skills.map((s) => (
               <Card key={s.title.en} size="sm" className="reveal">
-                <CardHeader><CardTitle>{s.title[lang]}</CardTitle></CardHeader>
+                <CardHeader><CardTitle><h3>{s.title[lang]}</h3></CardTitle></CardHeader>
                 <CardContent className="flex flex-wrap gap-1.5">
                   {s.items.map((i) => <Badge key={i} variant="outline">{i}</Badge>)}
                 </CardContent>

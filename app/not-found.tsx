@@ -3,7 +3,14 @@ import { buttonVariants } from "@/components/ui/button";
 import { SiteShell } from "@/components/SiteShell";
 import { href, pagePath } from "@/content";
 
-export const metadata: Metadata = { title: "404 · Page not found", robots: { index: false } };
+// Overrides the root canonical/OG, which would otherwise point this noindex page at the home page.
+export const metadata: Metadata = {
+  title: "404 · Page not found",
+  description: "This page does not exist or has moved.",
+  robots: { index: false },
+  alternates: { canonical: null, languages: {} },
+  openGraph: null,
+};
 
 export default function NotFound() {
   return (

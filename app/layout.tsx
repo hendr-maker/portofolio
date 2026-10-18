@@ -22,6 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "profile",
     locale: "en_US",
+    alternateLocale: "id_ID",
     siteName: profile.name,
     title: seo.title.en,
     description: seo.description.en,

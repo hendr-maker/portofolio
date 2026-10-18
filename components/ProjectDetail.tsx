@@ -8,7 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ApiExplorer, AppScreen, Console, FlowDiagram } from "@/components/views";
 import { SiteShell } from "@/components/SiteShell";
-import { abs, href, ogImage, pagePath, profile, siteUrl, ui, ldJson, type Lang } from "@/content";
+import { abs, href, ogImage, pagePath, profile, ui, ldJson, type Lang } from "@/content";
 import { allProjects, type Project } from "@/projects";
 
 const find = (slug: string) => allProjects.findIndex((x) => x.slug === slug);
@@ -27,7 +27,10 @@ export function projectMetadata(lang: Lang, slug: string): Metadata {
   if (!p) return {};
   const title = clip(`${p.title[lang]} · ${profile.name}`, 60);
   const built = lang === "en" ? "Built with" : "Dibangun dengan";
-  const description = clip(`${p.summary[lang]} ${built} ${p.stack.slice(0, 4).join(", ")}.`, 160);
+  const stack = `${built} ${p.stack.slice(0, 4).join(", ")}.`;
+  const base = `${p.summary[lang]} ${stack}`;
+  // Short summaries borrow the context sentence so the snippet reaches the 150-char target.
+  const description = clip(base.length >= 150 ? base : `${p.summary[lang]} ${p.context[lang]} ${stack}`, 160);
   return {
     title,
     description,
@@ -35,7 +38,16 @@ export function projectMetadata(lang: Lang, slug: string): Metadata {
       canonical: abs(pagePath(lang, slug)),
       languages: { en: abs(pagePath("en", slug)), id: abs(pagePath("id", slug)), "x-default": abs(pagePath("en", slug)) },
     },
-    openGraph: { title, description, type: "article", url: abs(pagePath(lang, slug)), images: [ogImage], locale: lang === "en" ? "en_US" : "id_ID" },
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      siteName: profile.name,
+      url: abs(pagePath(lang, slug)),
+      images: [ogImage],
+      locale: lang === "en" ? "en_US" : "id_ID",
+      alternateLocale: lang === "en" ? "id_ID" : "en_US",
+    },
   };
 }
 
@@ -66,12 +78,24 @@ export default function ProjectDetail({ lang, slug }: { lang: Lang; slug: string
   const tabs = views(p, lang);
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    name: p.title.en,
-    description: p.summary.en,
-    keywords: p.stack.join(", "),
-    author: { "@type": "Person", name: profile.name, url: `${siteUrl}/` },
-    url: abs(pagePath("en", p.slug)),
+    "@graph": [
+      {
+        "@type": "CreativeWork",
+        name: p.title[lang],
+        description: p.summary[lang],
+        inLanguage: lang,
+        keywords: p.stack.join(", "),
+        author: { "@type": "Person", name: profile.name, url: abs(pagePath("en")) },
+        url: abs(pagePath(lang, p.slug)),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: profile.name, item: abs(pagePath(lang)) },
+          { "@type": "ListItem", position: 2, name: p.title[lang], item: abs(pagePath(lang, p.slug)) },
+        ],
+      },
+    ],
   };
 
   return (
