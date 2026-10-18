@@ -5,12 +5,13 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "cn";
 import type { ApiView, AppView, Block, CliView, FlowView, Method, Project, Screen } from "@/lib/projects";
 
-// Renders the illustrative views defined in projects.ts. Data there is invented.
+// Renders the illustrative views defined in projects.ts. Data there is invented. Layout responds to the view's own
+// width (container queries), so the same markup reads as a phone screen inside a home-page tile.
 // Plain server markup on purpose: no client components, so nothing is hydrated or serialized twice.
 
 function Chrome({ url, children, className }: { url: string; children: ReactNode; className?: string }) {
   return (
-    <div className={cn("flex flex-col overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm", className)}>
+    <div className={cn("@container flex flex-col overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm", className)}>
       <div className="flex items-center gap-1.5 border-b bg-muted/60 px-3 py-2">
         <span className="size-2.5 rounded-full bg-destructive/70" />
         <span className="size-2.5 rounded-full bg-warning/80" />
@@ -43,7 +44,7 @@ function BlockView({ block }: { block: Block }) {
   switch (block.kind) {
     case "stats":
       return (
-        <div className="col-span-full grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <div className="col-span-full grid grid-cols-2 gap-2 @xl:grid-cols-4">
           {block.items.map(([label, value, delta]) => (
             <div key={label} className="rounded-lg border bg-background p-3">
               <p className="truncate text-[11px] text-muted-foreground">{label}</p>
@@ -95,7 +96,7 @@ function BlockView({ block }: { block: Block }) {
     }
     case "kanban":
       return (
-        <div className="col-span-full grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <div className="col-span-full grid grid-cols-2 gap-2 @xl:grid-cols-4">
           {block.columns.map((c) => (
             <div key={c.title} className="flex flex-col gap-2 rounded-lg bg-muted/60 p-2">
               <p className="flex items-center justify-between font-medium">{c.title}<span className="text-muted-foreground">{c.cards.length}</span></p>
@@ -155,7 +156,7 @@ function BlockView({ block }: { block: Block }) {
 
 function ScreenView({ screen, limit }: { screen: Screen; limit?: number }) {
   return (
-    <div className="grid gap-3 sm:grid-cols-2">
+    <div className="grid gap-3 @xl:grid-cols-2">
       {screen.blocks.slice(0, limit).map((b, i) => <BlockView key={i} block={b} />)}
     </div>
   );
@@ -171,7 +172,7 @@ export function AppScreen({ app, screen, slug, limit }: { app: AppView; screen: 
   return (
     <Chrome url={`${slug}.example/${screen.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}>
       <div className="flex min-h-72 text-xs">
-        <aside className="hidden w-40 shrink-0 flex-col gap-0.5 border-r bg-muted/30 p-2 sm:flex">
+        <aside className="hidden w-40 shrink-0 flex-col gap-0.5 border-r bg-muted/30 p-2 @xl:flex">
           <p className="mb-2 flex items-center gap-2 px-2 py-1 font-semibold">
             <span className="size-4 rounded bg-primary" /> {app.name}
           </p>
@@ -192,11 +193,11 @@ export function AppScreen({ app, screen, slug, limit }: { app: AppView; screen: 
 }
 
 const methodColor: Record<Method, string> = {
-  GET: "bg-sky-600",
-  POST: "bg-emerald-600",
-  PUT: "bg-amber-600",
-  PATCH: "bg-violet-600",
-  DELETE: "bg-rose-600",
+  GET: "bg-sky-700",
+  POST: "bg-emerald-700",
+  PUT: "bg-amber-700",
+  PATCH: "bg-violet-700",
+  DELETE: "bg-rose-700",
 };
 
 export function ApiExplorer({ api, compact }: { api: ApiView; compact?: boolean }) {
@@ -223,10 +224,10 @@ export function ApiExplorer({ api, compact }: { api: ApiView; compact?: boolean 
                     <div className="flex items-center gap-2 bg-muted/40 px-2 py-1.5">
                       <span className={cn("w-14 shrink-0 rounded px-1.5 py-0.5 text-center text-[10px] font-bold text-white", methodColor[e.method])}>{e.method}</span>
                       <span className="truncate font-mono font-medium">{e.path}</span>
-                      <span className="ml-auto hidden truncate text-muted-foreground sm:block">{e.summary}</span>
+                      <span className="ml-auto hidden truncate text-muted-foreground @xl:block">{e.summary}</span>
                     </div>
                     {open && (
-                      <div className="grid gap-2 border-t p-2 sm:grid-cols-2">
+                      <div className="grid gap-2 border-t p-2 @xl:grid-cols-2">
                         {e.body && <Code label="Request body · application/json" code={e.body} />}
                         {e.response && <Code label="200 · Response" code={e.response} />}
                       </div>
@@ -270,10 +271,10 @@ function mermaidFlow(flow: FlowView, direction: "LR" | "TD") {
 
 export function FlowDiagram({ flow }: { flow: FlowView }) {
   return (
-    <div className="rounded-xl border bg-card p-4 text-xs shadow-sm sm:p-6">
+    <div className="@container rounded-xl border bg-card p-4 text-xs shadow-sm sm:p-6">
       <p className="mb-4 text-sm font-semibold">{flow.title}</p>
-      <div className="hidden lg:block [&_svg]:h-auto [&_svg]:max-w-full" dangerouslySetInnerHTML={{ __html: mermaidFlow(flow, "LR") }} />
-      <div className="mx-auto max-w-xs lg:hidden [&_svg]:h-auto [&_svg]:max-w-full" dangerouslySetInnerHTML={{ __html: mermaidFlow(flow, "TD") }} />
+      <div className="hidden @4xl:block [&_svg]:h-auto [&_svg]:max-w-full" dangerouslySetInnerHTML={{ __html: mermaidFlow(flow, "LR") }} />
+      <div className="mx-auto max-w-xs @4xl:hidden [&_svg]:h-auto [&_svg]:max-w-full" dangerouslySetInnerHTML={{ __html: mermaidFlow(flow, "TD") }} />
     </div>
   );
 }
