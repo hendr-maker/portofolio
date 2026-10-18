@@ -93,6 +93,8 @@
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+    /* Keeps anchor targets and keyboard focus clear of the sticky header. */
+    scroll-padding-top: 5rem;
   }
   body {
     @apply bg-background text-foreground;

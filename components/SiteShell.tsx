@@ -9,6 +9,9 @@ export function SiteShell({ lang, alternate, children }: { lang: Lang; alternate
   const home = href(pagePath(lang));
   return (
     <div lang={lang} className="flex min-h-full flex-col">
+      <a href="#main" className="sr-only rounded-md bg-background px-3 py-2 text-sm font-medium ring-2 ring-ring focus-visible:not-sr-only focus-visible:fixed focus-visible:top-3 focus-visible:left-3 focus-visible:z-50">
+        {ui.skip[lang]}
+      </a>
       <header className="sticky top-0 z-20 border-b bg-background/75 backdrop-blur-md">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
           <a href={home} className="font-semibold tracking-tight">{profile.name}</a>
@@ -21,7 +24,7 @@ export function SiteShell({ lang, alternate, children }: { lang: Lang; alternate
           </nav>
         </div>
       </header>
-      <div className="flex-1">{children}</div>
+      <div id="main" className="flex-1">{children}</div>
       <footer className="mx-auto w-full max-w-6xl px-4 pb-10 sm:px-6">
         <Separator className="mb-6" />
         <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
