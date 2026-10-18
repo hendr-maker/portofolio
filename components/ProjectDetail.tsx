@@ -8,7 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ApiExplorer, AppScreen, Console, FlowDiagram } from "@/components/views";
 import { SiteShell } from "@/components/SiteShell";
-import { abs, href, ogImage, pagePath, profile, ui, ldJson, type Lang } from "@/lib/content";
+import { abs, href, ogImage, pagePath, profile, seo, ui, ldJson, type Lang } from "@/lib/content";
 import { allProjects, type Project } from "@/lib/projects";
 
 const find = (slug: string) => allProjects.findIndex((x) => x.slug === slug);
@@ -22,15 +22,23 @@ const clip = (text: string, max: number) => {
   return `${text.slice(0, space > 0 ? space : max - 1)}…`;
 };
 
+// Snippet from whole sentences only (a "…" cut mid-sentence reads as broken): the summary, up to two sentences from
+// the case study (context, role, solution, in that order) and as many stack items as fit; longest within 160 wins.
+const describe = (p: Project, lang: Lang) => {
+  const built = lang === "en" ? "Built with" : "Dibangun dengan";
+  const pool = [p.context, p.role, p.solution].flatMap((t) => t[lang].match(/[^.!?]+[.!?]+/g)?.map((x) => x.trim()) ?? []);
+  const extras = [[], ...pool.flatMap((x, i) => [[x], ...pool.slice(i + 1).map((y) => [x, y])])];
+  const candidates = extras.flatMap((e) => [...p.stack, ""].map((_, k) =>
+    [p.summary[lang], ...e, k ? `${built} ${p.stack.slice(0, k).join(", ")}.` : ""].filter(Boolean).join(" ")));
+  const fits = candidates.filter((d) => d.length <= 160);
+  return fits.reduce((a, b) => (b.length > a.length ? b : a), "") || clip(p.summary[lang], 160);
+};
+
 export function projectMetadata(lang: Lang, slug: string): Metadata {
   const p = allProjects[find(slug)];
   if (!p) return {};
   const title = clip(`${p.title[lang]} · ${profile.name}`, 60);
-  const built = lang === "en" ? "Built with" : "Dibangun dengan";
-  const stack = `${built} ${p.stack.slice(0, 4).join(", ")}.`;
-  const base = `${p.summary[lang]} ${stack}`;
-  // Short summaries borrow the context sentence so the snippet reaches the 150-char target.
-  const description = clip(base.length >= 150 ? base : `${p.summary[lang]} ${p.context[lang]} ${stack}`, 160);
+  const description = describe(p, lang);
   return {
     title,
     description,
@@ -44,7 +52,7 @@ export function projectMetadata(lang: Lang, slug: string): Metadata {
       type: "article",
       siteName: profile.name,
       url: abs(pagePath(lang, slug)),
-      images: [ogImage],
+      images: [{ ...ogImage, alt: seo.title[lang] }],
       locale: lang === "en" ? "en_US" : "id_ID",
       alternateLocale: lang === "en" ? "id_ID" : "en_US",
     },
