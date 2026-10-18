@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "cn";
 import { buttonVariants } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { GitHubLogo, LinkedInLogo } from "@/components/social";
 import { href, pagePath, profile, ui, type Lang } from "@/lib/content";
 
@@ -26,7 +25,7 @@ export function SiteShell({ lang, alternate, children }: { lang: Lang; alternate
       </header>
       <div id="main" className="flex-1">{children}</div>
       <footer className="mx-auto w-full max-w-6xl px-4 pb-10 sm:px-6">
-        <Separator className="mb-6" />
+        <hr className="mb-6" />
         <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
           <span>© {profile.name}</span>
           <span className="flex items-center gap-4">

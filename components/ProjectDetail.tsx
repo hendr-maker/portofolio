@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Check, TrendingUp } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ApiExplorer, AppScreen, Console, FlowDiagram } from "@/components/views";
 import { SiteShell } from "@/components/SiteShell";
@@ -167,7 +166,7 @@ export default function ProjectDetail({ lang, slug }: { lang: Lang; slug: string
           )}
         </div>
 
-        <Separator className="my-12" />
+        <hr className="my-12" />
         <a href={href(pagePath(lang, next.slug))} className="group flex items-center justify-between rounded-xl border p-6 transition-colors hover:bg-muted/50">
           <span>
             <span className="block text-sm text-muted-foreground">{ui.next[lang]}</span>
