@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { buttonVariants } from "@/components/ui/button";
+import { cn } from "cn";
 import { SiteShell } from "@/components/SiteShell";
 import { href, pagePath } from "@/lib/content";
 
@@ -23,7 +24,7 @@ export default function NotFound() {
         </p>
         <div className="mt-8 flex gap-3">
           <a href={href(pagePath("en"))} className={buttonVariants({ size: "lg" })}>Back to home</a>
-          <a href={href(pagePath("id"))} className={buttonVariants({ size: "lg", variant: "outline" })}>Ke beranda</a>
+          <a href={href(pagePath("id"))} className={cn(buttonVariants({ size: "lg", variant: "outline" }))}>Ke beranda</a>
         </div>
       </main>
     </SiteShell>

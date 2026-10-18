@@ -14,7 +14,7 @@ export function SiteShell({ lang, alternate, children }: { lang: Lang; alternate
           <nav className="flex items-center gap-1 text-sm">
             <a href={`${home}#projects`} className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "hidden sm:inline-flex")}>{ui.projects[lang]}</a>
             <a href={`${home}#experience`} className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "hidden sm:inline-flex")}>{ui.experience[lang]}</a>
-            <a href={href(alternate)} hrefLang={lang === "en" ? "id" : "en"} className={buttonVariants({ variant: "outline", size: "sm" })}>
+            <a href={href(alternate)} hrefLang={lang === "en" ? "id" : "en"} className={cn(buttonVariants({ variant: "outline", size: "sm" }))}>
               {ui.switchLabel[lang]}
             </a>
           </nav>
