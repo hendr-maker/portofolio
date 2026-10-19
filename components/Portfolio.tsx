@@ -90,8 +90,9 @@ function EditorBackdrop() {
   );
 }
 
-// Carousel behavior, as a plain inline script (CSP allows inline), so nothing hydrates. It runs while the page parses,
-// before React hydrates, and changes hidden/style/aria-pressed on the elements marked suppressHydrationWarning:
+// Carousel behavior, as a plain inline script (CSP allows inline): the exported home ships no React at all (see
+// scripts/strip-home-js.mjs). It runs while the page parses and changes hidden/style/aria-pressed; those elements are
+// marked suppressHydrationWarning because `pnpm dev` still hydrates the home page:
 // - Browsers without CSS ::scroll-button (Safari, Firefox) get the real prev/next buttons revealed.
 // - [data-autoplay] drifts slowly with snap off. Hover/focus and off-screen pause it; touch, wheel, click or key stop
 //   it and restore snap; the visible pause/resume button controls it too (WCAG 2.2.2). Never under reduced motion.
