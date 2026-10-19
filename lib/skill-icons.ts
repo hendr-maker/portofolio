@@ -2,7 +2,7 @@ import { icons as devicon } from "@iconify-json/devicon-plain";
 import type { SimpleIcon } from "simple-icons";
 import {
   siDocker, siDotnet, siFastapi, siGooglebigquery, siGooglecloud, siInertia, siLaravel, siNextdotjs, siOpentelemetry,
-  siPostgresql, siReact, siTanstack, siRedis, siRust, siStryker, siTailwindcss, siTypescript,
+  siPostgresql, siPython, siRabbitmq, siReact, siTanstack, siRedis, siRust, siStryker, siTailwindcss, siTypescript,
 } from "simple-icons";
 
 // Skills shown as a logo in brand color; the rest stay text. simple-icons dropped Microsoft/Amazon marks, so those
@@ -28,9 +28,9 @@ const dev = (name: string, hex: string): SkillIcon => {
 };
 
 export const skillIcons: Record<string, SkillIcon> = {
-  "C#": dev("csharp", "9B4F96"), ".NET 6–10": si(siDotnet), "EF Core": dev("entityframeworkcore", "512BD4"), Laravel: si(siLaravel), FastAPI: si(siFastapi), "Rust / Axum": si(siRust),
+  "C#": dev("csharp", "9B4F96"), ".NET 6–10": si(siDotnet), "EF Core": dev("entityframeworkcore", "512BD4"), Laravel: si(siLaravel), Python: si(siPython), FastAPI: si(siFastapi), "Rust / Axum": si(siRust),
   TypeScript: si(siTypescript), React: si(siReact), "Next.js": si(siNextdotjs), "TanStack Query": si(siTanstack), "Tailwind CSS": si(siTailwindcss), Inertia: si(siInertia),
-  PostgreSQL: si(siPostgresql), "SQL Server": dev("microsoftsqlserver", "CC2927"), Redis: si(siRedis), Docker: si(siDocker), AWS: dev("amazonwebservices", "FF9900"), GCP: si(siGooglecloud), BigQuery: si(siGooglebigquery),
+  PostgreSQL: si(siPostgresql), "SQL Server": dev("microsoftsqlserver", "CC2927"), Redis: si(siRedis), RabbitMQ: si(siRabbitmq), Docker: si(siDocker), AWS: dev("amazonwebservices", "FF9900"), GCP: si(siGooglecloud), BigQuery: si(siGooglebigquery),
   Stryker: si(siStryker), Playwright: dev("playwright", "2EAD33"), OpenTelemetry: si(siOpentelemetry, "F5A800"),
 };
 

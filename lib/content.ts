@@ -83,7 +83,7 @@ export const experience: { role: string; company: string; period: string; note: 
 export const skills: { title: T; items: string[] }[] = [
   {
     title: { en: "Backend", id: "Backend" },
-    items: ["C#", ".NET 6–10", "ASP.NET Core", "EF Core", "Dapper", "Laravel", "FastAPI", "Rust / Axum"],
+    items: ["C#", ".NET 6–10", "ASP.NET Core", "EF Core", "Dapper", "MediatR", "Hangfire", "SignalR", "Laravel", "Python", "FastAPI", "Rust / Axum"],
   },
   {
     title: { en: "Frontend", id: "Frontend" },
@@ -91,7 +91,7 @@ export const skills: { title: T; items: string[] }[] = [
   },
   {
     title: { en: "Data & Infra", id: "Data & Infra" },
-    items: ["PostgreSQL", "SQL Server", "Redis", "Docker", "AWS", "GCP", "BigQuery"],
+    items: ["PostgreSQL", "SQL Server", "Redis", "RabbitMQ", "Docker", "AWS", "GCP", "BigQuery"],
   },
   {
     title: { en: "Architecture", id: "Arsitektur" },
@@ -99,7 +99,7 @@ export const skills: { title: T; items: string[] }[] = [
   },
   {
     title: { en: "Testing & Ops", id: "Testing & Ops" },
-    items: ["xUnit", "Testcontainers", "Stryker", "NBomber", "Playwright", "OpenTelemetry", "Serilog"],
+    items: ["xUnit", "pytest", "Testcontainers", "Stryker", "NBomber", "Playwright", "OpenTelemetry", "Serilog"],
   },
 ];
 
