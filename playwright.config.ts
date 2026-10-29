@@ -14,7 +14,7 @@ export default defineConfig({
     { name: "mobile-chrome", use: { ...devices["Pixel 7"], channel: "chrome", viewport: { width: 390, height: 844 } } },
   ],
   webServer: {
-    command: `pnpm dlx serve@14 out -l ${port} --no-port-switching`,
+    command: `pnpm exec serve out -l ${port} --no-port-switching`,
     url: `http://127.0.0.1:${port}`,
     reuseExistingServer: !process.env.CI,
   },
